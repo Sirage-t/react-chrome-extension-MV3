@@ -1,7 +1,7 @@
 {
-  "name": "react-chrome-extension",
+  "name": "react-chrome-extension-starter",
   "version": "1.0.0",
-  "description": "A boilerplate for creating a chrome extension using react and typescript",
+  "description": "A boilerplate for creating a chrome extension in react and typescript",
   "main": "index.js",
   "author": "Sirage",
   "private": true,
