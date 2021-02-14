@@ -1,4 +1,5 @@
 build/
+build/*.js
 dist/
 node_modules/
 .snapshots/

@@ -1,8 +1,7 @@
 import React from 'react';
 
 const App = () => {
-  console.log('hello from ...');
-  return <div>DevTools starting page</div>;
+  return <div>Get started at './src/devtools/App.tsx'</div>;
 };
 
 export default App;

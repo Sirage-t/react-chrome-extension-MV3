@@ -14,33 +14,61 @@ const ifDirIsNotEmpty = (dir, value) => {
   return fs.readdirSync(dir).length !== 0 ? value : undefined;
 };
 
+/**
+ * @param SrcPath the folder/file name (eg 'popup') or the path relative to the 'src' dir (eg 'scripts/background.ts')
+ * @param value the value to return if the folder is found
+ */
+const ifDirExists = (SrcPath, value) => {
+  return fs.existsSync(path.join(__dirname, 'src', SrcPath))
+    ? value
+    : undefined;
+};
+
 module.exports = (env) => {
   const { ifProd, ifDev } = getIfUtils(env);
-  const ifPopupExists = fs.existsSync('./src/popup');
-  const ifOptionsExists = fs.existsSync('./src/options');
-  const ifDevtoolsExists = fs.existsSync('./src/devtools');
+
+  const getFolders = (dirPath) => {
+    return fs
+      .readdirSync(path.join(__dirname, 'src', dirPath), {
+        withFileTypes: true,
+      })
+      .filter((dirent) => dirent.isDirectory())
+      .map((dirent) => dirent.name);
+  };
+
+  /**
+   * @param dirPath the path relative to src (eg 'scripts' not 'src/scripts')
+   * @param entryFile the entry point (eg 'index.ts' or 'index.tsx')
+   */
+  const getEntries = (dirPath, entryFile = 'index.tsx') => {
+    const _e = {};
+    // get all folders
+    const folders = getFolders(dirPath);
+
+    folders.forEach((folderName) => {
+      _e[camelCase(folderName)] = path.join(
+        __dirname,
+        'src',
+        dirPath,
+        folderName,
+        entryFile,
+      );
+    });
+
+    return _e;
+  };
 
   /** get a list of all folders in UIElements (this means the user has added a (react) html page and wants webpack to handle bundling and transpiling) */
   const UIElementsDir = path.join(__dirname, 'src', 'UIElements');
-  const UIElements = fs
-    .readdirSync(UIElementsDir, { withFileTypes: true })
-    .filter((dirent) => dirent.isDirectory())
-    .map((dirent) => dirent.name);
-  const setUIElementEntries = () => {
-    const _entries = {};
-    UIElements.forEach((e) => {
-      _entries[camelCase(e)] = `./src/UIElements/${e}/index.tsx`;
-    });
-    return _entries;
-  };
   const setUIElementHtml = () => {
     const htmlPages = [];
-    UIElements.forEach((e) => {
+    const UIElements = getFolders('UIElements');
+    UIElements.forEach((folderName) => {
       htmlPages.push(
         new HtmlWebpackPlugin({
-          filename: `${camelCase(e)}.html`,
-          template: path.join(UIElementsDir, e, 'index.html'),
-          chunks: [camelCase(e)],
+          filename: `${camelCase(folderName)}.html`,
+          template: path.join(UIElementsDir, folderName, 'index.html'),
+          chunks: [camelCase(folderName)],
         }),
       );
     });
@@ -50,17 +78,21 @@ module.exports = (env) => {
   return {
     mode: ifProd('production', 'development'),
     entry: removeEmpty({
-      popup: ifPopupExists && './src/popup/index.tsx',
-      options: ifOptionsExists && './src/options/index.tsx',
-      devtools: ifDevtoolsExists && './src/devtools/index.tsx',
-      ...setUIElementEntries(),
+      popup: ifDirExists('popup', path.join(__dirname, 'src/popup/index.tsx')),
+      options: ifDirExists('options', './src/options/index.tsx'),
+      devtools: ifDirExists('devtools', './src/devtools/index.tsx'),
+      onboarding: ifDirExists('onboarding', './src/onboarding/index.tsx'),
+      newtab: ifDirExists('newtab', './src/newtab/index.tsx'),
+      serviceworker: ifDirExists('serviceworker/index.ts', {
+        import: './src/serviceworker/index.ts',
+        filename: 'serviceworker.js',
+      }),
+      ...getEntries('UIElements'),
+      ...getEntries('scripts', 'index.ts'),
     }),
     output: {
       path: path.resolve(__dirname, 'build'),
-      filename: ifProd(
-        'js/[name]-[contenthash].bundle.js',
-        'js/[name].bundle.js',
-      ),
+      filename: 'js/[name].js',
     },
     module: {
       rules: [
@@ -113,24 +145,46 @@ module.exports = (env) => {
           filename: 'css/[name].css',
         }),
       ),
-      ifPopupExists &&
+      ifDirExists(
+        'popup',
         new HtmlWebpackPlugin({
           filename: 'popup.html',
           template: 'src/popup/index.html',
           chunks: ['popup'],
         }),
-      ifOptionsExists &&
+      ),
+      ifDirExists(
+        'options',
         new HtmlWebpackPlugin({
           filename: 'options.html',
           template: 'src/options/index.html',
           chunks: ['options'],
         }),
-      ifDevtoolsExists &&
+      ),
+      ifDirExists(
+        'devtools',
         new HtmlWebpackPlugin({
           filename: 'devtools.html',
           template: 'src/devtools/index.html',
           chunks: ['devtools'],
         }),
+      ),
+      ifDirExists(
+        'newtab',
+        new HtmlWebpackPlugin({
+          filename: 'newtab.html',
+          template: 'src/newtab/index.html',
+          chunks: ['newtab'],
+        }),
+      ),
+      ifDirExists(
+        'onboarding',
+        new HtmlWebpackPlugin({
+          filename: 'onboarding.html',
+          template: 'src/onboarding/index.html',
+          chunks: ['onboarding'],
+        }),
+      ),
       ...setUIElementHtml(),
       new CopyPlugin({
         patterns: removeEmpty([
@@ -157,7 +211,7 @@ module.exports = (env) => {
     resolve: {
       extensions: ['.tsx', '.ts', '.js', '.jsx'],
     },
-    devtool: ifProd(false, 'eval-source-map'),
+    devtool: ifProd(false, 'source-map'),
     devServer: {
       //   index: 'index.html', // The filename that is considered the index file.
       port: 3003,
