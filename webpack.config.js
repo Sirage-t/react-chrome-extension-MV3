@@ -27,6 +27,9 @@ const ifDirExists = (SrcPath, value) => {
 module.exports = (env) => {
   const { ifProd, ifDev } = getIfUtils(env);
 
+  /**
+   * @param dirPath the path relative to src (eg 'scripts' not 'src/scripts')
+   */
   const getFolders = (dirPath) => {
     return fs
       .readdirSync(path.join(__dirname, 'src', dirPath), {
@@ -80,7 +83,6 @@ module.exports = (env) => {
     entry: removeEmpty({
       popup: ifDirExists('popup', path.join(__dirname, 'src/popup/index.tsx')),
       options: ifDirExists('options', './src/options/index.tsx'),
-      devtools: ifDirExists('devtools', './src/devtools/index.tsx'),
       onboarding: ifDirExists('onboarding', './src/onboarding/index.tsx'),
       newtab: ifDirExists('newtab', './src/newtab/index.tsx'),
       serviceworker: ifDirExists('serviceworker/index.ts', {
@@ -159,14 +161,6 @@ module.exports = (env) => {
           filename: 'options.html',
           template: 'src/options/index.html',
           chunks: ['options'],
-        }),
-      ),
-      ifDirExists(
-        'devtools',
-        new HtmlWebpackPlugin({
-          filename: 'devtools.html',
-          template: 'src/devtools/index.html',
-          chunks: ['devtools'],
         }),
       ),
       ifDirExists(
