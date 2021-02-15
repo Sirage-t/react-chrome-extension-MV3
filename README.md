@@ -1,6 +1,8 @@
 # React Chrome Extension MV3 Starter
 
-A boilerplate code to get you started with building chrome extensions (manifest v3) using modern web technologies, namely `react` and `typescript`. The tool uses webpack v5 (already configured) and webpack dev server v4 beta.
+A boilerplate code to get you started with building chrome extensions (manifest v3) using modern web technologies, namely `react` and `typescript`.
+
+The tool uses webpack v5 and webpack dev server v4.
 
 ---
 
@@ -20,6 +22,7 @@ A boilerplate code to get you started with building chrome extensions (manifest 
 7. [Advance Config](#advance-config)
    - [Webpack](#webpack)
    - [Eslint](#eslint)
+8. [LICENSE](#license)
 
 ## Install
 
@@ -47,12 +50,13 @@ npm start
 yarn start
 ```
 
-Use the dev server when designing your extension and build when you want to test it in Chrome.
-Note: you need to build if you want to use/test Chrome API.
+Use the **Dev Server** when designing your extension and **Build** when you want to test it in Chrome.
+
+**Note**: you need to build if you want to use/test Chrome API.
 
 ## Build
 
-You can build the project in three modes depending on your need.
+You can build the project in three ways depending on your need.
 
 ### Dev Build
 
@@ -82,6 +86,14 @@ yarn run watch
 
 Build for production, minified, no comments, and no sourcemaps (reduces file size and is not actually needed when publishing for production).
 
+```javascript
+// npm
+npm run build
+
+// yarn
+yarn run build
+```
+
 ## Usage
 
 The main goal when the tool was created was to be as flexible as possible and cover as many use cases out of the box, with minimal to no additional configuration (no need to touch webpack config file). To this end, you create custom react pages (see [Custom Pages](#custom-pages)), and scripts (standalone typescript files — see [Scripts](#scripts)) that will automatically be build for you when detected.
@@ -107,7 +119,7 @@ If you want to create a standalone javascript file, like a content script, you c
 1. Creating a new folder inside `src/scripts`
 2. Creating an `index.ts` file inside the folder
 
-The emitted js will be in `js/[folder name].js`.
+The emitted js will be in `js/[folder name].js`.\
 Inside of `index.ts` you can use ES modules as well.
 
 Note: `index.ts` is required. It is the entry file for webpack.
@@ -126,6 +138,8 @@ The service worker is in its own folder as it needs to be emitted directly in th
 
 Only one service worker is allowed in manifest v3, but you can use ES modules. Make sure to import them in `serviceworker/index.ts`, webpack will take care of the rest.
 
+---
+
 ## Advance Config
 
 ### Webpack
@@ -135,3 +149,5 @@ You can config webpack.config.js however you want.
 ### Eslint
 
 The tool uses `Airbnb` style, if you don't like it feel free to change it in `.eslintrc.json`.
+
+## LICENSE
