@@ -1,8 +1,17 @@
 # React Chrome Extension MV3 Starter
 
-A boilerplate code to get you started with building chrome extensions (manifest v3) using modern web technologies, namely `react` and `typescript`.
+A boilerplate to get you started with developing chrome extensions (manifest v3) in `react` and `typescript`, with little to zero configuration.
 
-The tool uses webpack v5 and webpack dev server v4.
+## Features
+
+- React
+- typescript
+- sass
+- manifest version 3
+- create custom html pages and UI Elements — see [Custom Pages](#custom-pages)
+- create as many scripts as you want, with ES module support and auto build
+- Webpack v5
+- Dev server
 
 ---
 
@@ -84,7 +93,7 @@ yarn run watch
 
 ### Prod Build
 
-Build for production, minified, no comments, and no sourcemaps (reduces file size and is not actually needed when publishing for production).
+Build for production, minified, no comments, and no sourcemaps.
 
 ```javascript
 // npm
@@ -96,21 +105,21 @@ yarn run build
 
 ## Usage
 
-The main goal when the tool was created was to be as flexible as possible and cover as many use cases out of the box, with minimal to no additional configuration (no need to touch webpack config file). To this end, you create custom react pages (see [Custom Pages](#custom-pages)), and scripts (standalone typescript files — see [Scripts](#scripts)) that will automatically be build for you when detected.
+The main goal when the tool was created was to be as flexible as possible and cover as many use cases out of the box, with minimal to no configuration (no need to touch webpack config file). To this end, you can create custom react pages (see [Custom Pages](#custom-pages)), and scripts (standalone typescript files — see [Scripts](#scripts)) that will automatically be build for you when detected.
 
 ### Custom Pages
 
 In addition to the default pages: `popup`, `options`, `newtab`, and `options`, you can create your own custom html page powered by react.
 
-1. Create a new folder inside `src/UIElements` (the name is used for the final html file)
+1. Create a new folder inside `src/UIElements` (folder name will be the name of the output html file)
 2. Inside the new folder create an `index.html`, `index.tsx`, and `App.tsx` (you can copy these from `popup` or any other folder)
 3. The content of these files is similar to `create-react-app` if you have used that before.
 
 Note: both `index.html` and `index.tsx` are required and the name must be exact. You can `App.tsx` whatever you want as long as you import it correctly in `index.tsx`.
 
-When you build, a new html file will be created in the `build` folder, with the name of the original folder as its name (eg if the `index.html` is inside a folder named 'signin' you final file will be `signin.html`).
+**Output**: your custom page will be accessible from `build/[folder name].html`. If you want to inject the html via a content script, the script must point to the parent directory `../[folder name].html`, as all javascript files will be emitted to `build/js` (except service worker).
 
-Any js or css files will be automatically added to your final html file.
+Any js or css files (including react) will be automatically added to your html file. No need to manually add \<script\> or \<style\> tags
 
 ### Scripts
 
