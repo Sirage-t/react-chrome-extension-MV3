@@ -5,13 +5,15 @@ A boilerplate to get you started with developing chrome extensions (manifest v3)
 ## Features
 
 - React
-- typescript
-- sass
-- manifest version 3
-- create custom html pages and UI Elements — see [Custom Pages](#custom-pages)
-- create as many scripts as you want, with ES module support and auto build
+- Typescript
+- Sass/Css
+- Manifest Version 3
+- Supports up to ES2021 syntax (using babel)
+- Browserslist
+- Create custom html pages and UI Elements — see [Custom Pages](#custom-pages)
+- Create as many scripts as you want, with ES module support and auto build
 - Webpack v5
-- Dev server
+- Dev server with live reloading
 
 ---
 
