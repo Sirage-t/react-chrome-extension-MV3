@@ -7,6 +7,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
+const ProgressBar = require('progress-bar-webpack-plugin');
 
 const pkgJson = require('./package.json');
 
@@ -201,6 +202,7 @@ module.exports = (env) => {
         ]),
       }),
       ifDev(new ReactRefreshWebpackPlugin()),
+      ifProd(new ProgressBar()),
     ]),
     resolve: {
       extensions: ['.tsx', '.ts', '.js', '.jsx'],

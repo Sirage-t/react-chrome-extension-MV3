@@ -37,9 +37,15 @@ A boilerplate to get you started with developing chrome extensions (manifest v3)
 
 ## Install
 
-Clone the repo or download a zipped file and then unzip.
+Clone repo
 
-Then,
+```markdown
+git clone https://github.com/Sirage-t/react-chrome-extension-MV3.git
+```
+
+or Download zipped from `code` (the green button at the top) then `Download ZIP`.
+
+Navigate to `react-chrome-extension-MV3` directory, then:
 
 ```javascript
 // if you prefer npm
@@ -67,11 +73,11 @@ Use the **Dev Server** when designing your extension and **Build** when you want
 
 ## Build
 
-You can build the project in three ways depending on your need.
+You can build the project in three ways depending on your need. All three will create a `build` folder at the root of your project directory.
 
 ### Dev Build
 
-Build the extension in development mode, with sourcemaps and un-minified code.
+Build the extension in development mode, with sourcemaps and un-minified code. Useful when testing in Chrome browser. Sourcemaps will help you locate errors in your original typescript code.
 
 ```javascript
 // if you prefer npm
@@ -83,7 +89,7 @@ yarn run dev
 
 ### Watch Build
 
-Build in development mode with `watch` enabled. This will watch for any changes and automatically rebuild so you don't have to run `dev` every single time you make a change.
+Same as above (`dev`) but with `--watch` enabled. This will watch for any changes and automatically rebuild so you don't have to run `dev` every single time you make a change.
 
 ```javascript
 // npm
@@ -107,11 +113,18 @@ yarn run build
 
 ## Usage
 
-The main goal when the tool was created was to be as flexible as possible and cover as many use cases out of the box, with minimal to no configuration (no need to touch webpack config file). To this end, you can create custom react pages (see [Custom Pages](#custom-pages)), and scripts (standalone typescript files — see [Scripts](#scripts)) that will automatically be build for you when detected.
+The main goal when I created the tool was to make it as flexible as possible and cover as many use cases out of the box, with minimal to no configuration (no need to touch webpack config file). To this end, you can also create custom react pages (see [Custom Pages](#custom-pages)), and scripts (standalone typescript files — see [Scripts](#scripts)) that will automatically be build for you when detected.
+
+Four default 'pages' are provided out of the box, `popup`, `options`, `newtab`, and `onboarding`. To get started:
+
+1. Clean manifest.json — see [Manifest](#manifest)
+2. Start by editing the `App.tsx` in the desired default page
+3. Or, create your own custom page — see [Custom Pages](#custom-pages)
+4. Enjoy coding :)
 
 ### Custom Pages
 
-In addition to the default pages: `popup`, `options`, `newtab`, and `options`, you can create your own custom html page powered by react.
+In addition to the default pages: `popup`, `options`, `newtab`, and `onboarding`, you can create your own custom html page powered by react.
 
 1. Create a new folder inside `src/UIElements` (folder name will be the name of the output html file)
 2. Inside the new folder create an `index.html`, `index.tsx`, and `App.tsx` (you can copy these from `popup` or any other folder)
@@ -128,12 +141,14 @@ Any js or css files (including react) will be automatically added to your html f
 If you want to create a standalone javascript file, like a content script, you can do so by:
 
 1. Creating a new folder inside `src/scripts`
-2. Creating an `index.ts` file inside the folder
+2. Creating an `index.ts` inside that folder
+3. Have fun coding
 
-The emitted js will be in `js/[folder name].js`.\
-Inside of `index.ts` you can use ES modules as well.
+Note 1: In `index.ts` you can use ES modules as well.
 
-Note: `index.ts` is required. It is the entry file for webpack.
+Note 2: The emitted js will be in `js/[folder name].js`.\
+
+Note 3: `index.ts` is required. Webpack uses this as the entry point. If you don't have an `index.ts` file the build will fail.
 
 ## Manifest
 
