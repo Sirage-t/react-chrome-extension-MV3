@@ -118,9 +118,10 @@ The main goal when I created the tool was to make it as flexible as possible and
 Four default 'pages' are provided out of the box, `popup`, `options`, `newtab`, and `onboarding`. To get started:
 
 1. Clean manifest.json — see [Manifest](#manifest)
-2. Start by editing the `App.tsx` in the desired default page
-3. Or, create your own custom page — see [Custom Pages](#custom-pages)
-4. Enjoy coding :)
+2. Delete pages that you don't need (eg 'onboarding', 'newtab' etc)
+3. Start by editing the `App.tsx` in the desired default page
+4. Or, create your own custom page — see [Custom Pages](#custom-pages)
+5. Enjoy coding :)
 
 ### Custom Pages
 
@@ -142,7 +143,7 @@ If you want to create a standalone javascript file, like a content script, you c
 
 1. Creating a new folder inside `src/scripts`
 2. Creating an `index.ts` inside that folder
-3. Have fun coding
+3. Have fun coding :)
 
 Note 1: In `index.ts` you can use ES modules as well.
 
