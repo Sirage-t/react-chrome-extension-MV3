@@ -39,32 +39,33 @@ A boilerplate to get you started with developing chrome extensions (manifest v3)
 
 Clone repo
 
-```markdown
-git clone https://github.com/Sirage-t/react-chrome-extension-MV3.git
+```bash
+$ git clone https://github.com/Sirage-t/react-chrome-extension-MV3.git
+$ cd react-chrome-extension-MV3
 ```
 
 or Download zipped from `code` (the green button at the top) then `Download ZIP`.
 
 Navigate to `react-chrome-extension-MV3` directory, then:
 
-```javascript
-// if you prefer npm
-npm install
+```bash
+# if you prefer npm
+$ npm install
 
-// if you prefer yarn
-yarn install
+# if you prefer yarn
+$ yarn install
 ```
 
 ## Dev Server
 
 To use `webpack-dev-server` with hot module reloading enabled by default, run:
 
-```javascript
-// npm
-npm start
+```bash
+# npm
+$ npm start
 
-// or yarn
-yarn start
+# or yarn
+$ yarn start
 ```
 
 Use the **Dev Server** when designing your extension and **Build** when you want to test it in Chrome.
@@ -79,36 +80,36 @@ You can build the project in three ways depending on your need. All three will c
 
 Build the extension in development mode, with sourcemaps and un-minified code. Useful when testing in Chrome browser. Sourcemaps will help you locate errors in your original typescript code.
 
-```javascript
-// if you prefer npm
-npm run dev
+```bash
+# if you prefer npm
+$ npm run dev
 
-// if you prefer yarn
-yarn run dev
+# if you prefer yarn
+$ yarn run dev
 ```
 
 ### Watch Build
 
 Same as above (`dev`) but with `--watch` enabled. This will watch for any changes and automatically rebuild so you don't have to run `dev` every single time you make a change.
 
-```javascript
-// npm
-npm run watch
+```bash
+# npm
+$ npm run watch
 
-// yarn
-yarn run watch
+# yarn
+$ yarn run watch
 ```
 
 ### Prod Build
 
 Build for production, minified, no comments, and no sourcemaps.
 
-```javascript
-// npm
-npm run build
+```bash
+# npm
+$ npm run build
 
-// yarn
-yarn run build
+# yarn
+$ yarn run build
 ```
 
 ## Usage
@@ -177,4 +178,7 @@ You can config webpack.config.js however you want.
 
 The tool uses `Airbnb` style, if you don't like it feel free to change it in `.eslintrc.json`.
 
-## LICENSE
+## License
+
+[MIT](https://github.com/Sirage-t/react-chrome-extension-MV3/blob/master/LICENSE) @ [Sirage-T](https://github.com/Sirage-t)
+Feel free to use the tool however you want.
