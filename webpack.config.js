@@ -90,7 +90,7 @@ module.exports = (env) => {
         import: './src/serviceworker/index.ts',
         filename: 'serviceworker.js',
       }),
-      ...getEntries('UIElements'),
+      ...fs.existsSync(UIElementsDir) ? getEntries('UIElements') : [],
       ...getEntries('scripts', 'index.ts'),
     }),
     output: {
@@ -180,7 +180,7 @@ module.exports = (env) => {
           chunks: ['onboarding'],
         }),
       ),
-      ...setUIElementHtml(),
+      ...fs.existsSync(UIElementsDir) ? setUIElementHtml() : [],
       new CopyPlugin({
         patterns: removeEmpty([
           ifDirIsNotEmpty(path.join(__dirname, 'public', 'icons'), {
@@ -214,7 +214,9 @@ module.exports = (env) => {
       host: 'localhost',
       open: true, // open the browser after server had been started
       compress: true,
-      overlay: true, // show compiler errors in the browser
+      client: {
+        overlay: true, // show compiler errors in the browser
+      },
       static: path.join(__dirname, 'public'),
     },
   };
